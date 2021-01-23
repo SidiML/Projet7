@@ -24,7 +24,7 @@ st.subheader("Ce tableau de bord permet de prédire si un client est capable ou 
 @st.cache()
 def get_data():
     links4="https://github.com/SidiML/Projet7/blob/master/X_test_final?raw=true"
-    return pd.read_pickle(links4,compression,"xz")
+    return pd.read_pickle(links4,compression="xz")
 X_test_final=get_data()
 #X_test_final=pickle.load(open("https://github.com/SidiML/Projet_Scoring/blob/master/X_test_final"))
 #X_train_final=pd.read_csv("C:/Users/admin/OneDrive/Bureau/Openclassroom/Projet7/X_train_final.csv")
