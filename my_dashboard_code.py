@@ -12,10 +12,7 @@ from plotly import tools
 import plotly.offline as py
 import streamlit.components.v1 as components
 import joblib,os,pickle,warnings
-from io import BytesIO
-import requests
 warnings.filterwarnings('ignore')
-import matplotlib.pyplot as plt
 import seaborn as sns
 color=sns.cubehelix_palette(start=.5, rot=-.5, as_cmap=True)
 import lightgbm as lgb
@@ -43,19 +40,16 @@ X_test_final=get_data()
 y_test = pd.read_pickle("https://github.com/SidiML/Projet_Scoring/blob/master/y_test?raw=true")
 
 #####################################
-#@st.cache()
+@st.cache()
 def get_data():
     links="https://github.com/SidiML/Projet7/blob/master/my_model.joblib?raw=true"
-    mfile = BytesIO(requests.get(links).content)
-    return joblib.load(mfile)
-
+    return joblib.load(links)
 clf1=get_data()
 
-#@st.cache()
+@st.cache()
 def get_data():
     links2="https://github.com/SidiML/Projet7/blob/master/my_feature.joblib?raw=true"
-    mfile = BytesIO(requests.get(links2).content)
-    return joblib.load(mfile)
+    return joblib.load(links2)
 selected_features=get_data()
 ##################################################
 predict_test=clf1.predict(X_test_final[selected_features])
