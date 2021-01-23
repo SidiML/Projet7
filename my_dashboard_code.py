@@ -26,8 +26,8 @@ st.subheader("Ce tableau de bord permet de prédire si un client est capable ou 
 #X_test_final=pd.read_pickle("https://github.com/SidiML/Projet_Scoring/blob/master/X_test_final?raw=true")
 @st.cache()
 def get_data():
-    links4="https://raw.githubusercontent.com/SidiML/Projet_Scoring/master/X_test_final.csv"
-    return pd.read_csv(links4,sep=",")
+    links4="https://github.com/SidiML/Projet7/blob/master/X_test_final?raw=true"
+    return pd.read_pickle(links4,compression"xz")
 X_test_final=get_data()
 #X_test_final=pickle.load(open("https://github.com/SidiML/Projet_Scoring/blob/master/X_test_final"))
 #X_train_final=pd.read_csv("C:/Users/admin/OneDrive/Bureau/Openclassroom/Projet7/X_train_final.csv")
@@ -45,7 +45,7 @@ y_test = pd.read_pickle("https://github.com/SidiML/Projet_Scoring/blob/master/y_
 #####################################
 #@st.cache()
 def get_data():
-    links="https://github.com/SidiML/Projet_Scoring/blob/master/my_model.joblib?raw=true"
+    links="https://github.com/SidiML/Projet7/blob/master/my_model.joblib?raw=true"
     mfile = BytesIO(requests.get(links).content)
     return joblib.load(mfile)
 
@@ -53,7 +53,7 @@ clf1=get_data()
 
 #@st.cache()
 def get_data():
-    links2="https://github.com/SidiML/Projet_Scoring/blob/master/my_feature.joblib?raw=true"
+    links2="https://github.com/SidiML/Projet7/blob/master/my_feature.joblib?raw=true"
     mfile = BytesIO(requests.get(links2).content)
     return joblib.load(mfile)
 selected_features=get_data()
@@ -84,8 +84,8 @@ def st_shap(plot, height=200,width=870):
 
 #@st.cache()
 def get_data():
-    links="https://github.com/SidiML/Projet_Scoring/blob/master/data_train1?raw=true"
-    return pd.read_pickle(links, compression='gzip')
+    links="https://github.com/SidiML/Projet7/blob/master/data_train1?raw=true"
+    return pd.read_pickle(links, compression='xz')
 
 df1 = get_data()
 
@@ -124,7 +124,7 @@ if id_client in list(df.index):
 
 	@st.cache()
 	def get_data():
-		links1="https://github.com/SidiML/Projet_Scoring/blob/master/my_shap_model.joblib?raw=true"
+		links1="https://github.com/SidiML/Projet7/blob/master/my_shap_model.joblib?raw=true"
 		return joblib.load(links1)
 	lgbm_explainer=get_data()
 	shap_values =lgbm_explainer.shap_values(df.drop(['predict','proba'],1).loc[[a]])
