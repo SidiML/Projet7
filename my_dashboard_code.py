@@ -22,7 +22,7 @@ st.subheader("Ce tableau de bord permet de prédire si un client est capable ou 
 
 #X_test_final=pd.read_pickle("https://github.com/SidiML/Projet_Scoring/blob/master/X_test_final?raw=true")
 #@st.cache()
-X_test_final=pd.read_pickle("https://raw.githubusercontent.com/SidiML/Projet7/master/X_test_final",compression='xz')
+X_test_final=pd.read_csv("https://raw.githubusercontent.com/SidiML/Projet7/master/X_test_final.csv")
 #X_train_final=pd.read_csv("C:/Users/admin/OneDrive/Bureau/Openclassroom/Projet7/X_train_final.csv")
 #X_val_final=pd.read_csv("C:/Users/admin/OneDrive/Bureau/Openclassroom/Projet7/X_val_final.csv")
 
@@ -36,17 +36,13 @@ X_test_final=pd.read_pickle("https://raw.githubusercontent.com/SidiML/Projet7/ma
 y_test = pd.read_pickle("https://raw.githubusercontent.com/SidiML/Projet7/master/y_test")
 
 #####################################
-@st.cache()
-def get_data():
-    links="https://raw.githubusercontent.com/SidiML/Projet7/master/my_model.joblib"
-    return joblib.load(links)
-clf1=get_data()
+fileName="https://github.com/SidiML/Projet7/blob/master/my_model.joblib?raw=true"
+with open(fileName, 'r') as f:
+    clf1 = joblib.load(f)
 
-@st.cache()
-def get_data():
-    links2="https://raw.githubusercontent.com/SidiML/Projet7/master/my_feature.joblib"
-    return joblib.load(links2)
-selected_features=get_data()
+fileName="https://github.com/SidiML/Projet7/blob/master/my_feature.joblib?raw=true"
+with open(fileName, 'r') as f:
+    selected_features = joblib.load(f)
 ##################################################
 predict_test=clf1.predict(X_test_final[selected_features])
 #print(classification_report(y_test,predict_test))
@@ -74,8 +70,8 @@ def st_shap(plot, height=200,width=870):
 
 #@st.cache()
 def get_data():
-    links="https://raw.githubusercontent.com/SidiML/Projet7/master/data_train1"
-    return pd.read_pickle(links, compression='xz')
+    links="https://raw.githubusercontent.com/SidiML/Projet7/master/data_train1.csv"
+    return pd.read_csv(links)
 
 df1 = get_data()
 
@@ -110,14 +106,11 @@ if id_client in list(df.index):
 
 
 	#lgbm_explainer = shap.TreeExplainer(model = clf1, model_output='margin')
+    fileName="https://github.com/SidiML/Projet7/blob/master/my_shap_model.joblib?raw=true"
+    with open(fileName, 'r') as f:
+        lgbm_explainer = joblib.load(f)
 
-
-	@st.cache()
-	def get_data():
-		links1="https://raw.githubusercontent.com/SidiML/Projet7/master/my_shap_model.joblib"
-		return joblib.load(links1)
-	lgbm_explainer=get_data()
-	shap_values =lgbm_explainer.shap_values(df.drop(['predict','proba'],1).loc[[a]])
+    shap_values =lgbm_explainer.shap_values(df.drop(['predict','proba'],1).loc[[a]])
 
 	vals= np.abs(shap_values).mean(0)
 	feature_importance = pd.DataFrame(list(zip(df.drop(['predict','proba'],1).loc[[a]], vals)), columns=['col_name','feature_importance'])
